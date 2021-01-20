@@ -1,4 +1,4 @@
-from typing import Iterable, Optional, Callable
+from typing import Callable, Iterable, Optional
 
 import torch
 import torch.nn as nn
@@ -58,3 +58,7 @@ class Critic(NeuralNetwork):
         fc_layers: Iterable[LayerSize] = (64, 64),
     ):
         super().__init__(state_size + action_size, 1, fc_layers, None)
+
+    def __call__(self, states: torch.Tensor, actions: torch.Tensor):
+        x = torch.cat((states, actions), dim=1)
+        return super().__call__(x)

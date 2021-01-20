@@ -22,24 +22,25 @@ class AgentTrainer:
     ) -> None:
         agent.set_train_mode(True)
         brain_name = env.brain_names[0]
+        number_of_agents = agent.number_of_agents
         for _ in range(number_episodes):
             episode_number = len(self.scores) + 1
             env_info = env.reset(train_mode=True)[brain_name]
-            state = env_info.vector_observations[0]
-            score = 0
+            states = env_info.vector_observations
+            scores = np.zeros(number_of_agents)
             while True:
-                actions = agent.act(state)
+                actions = agent.act(states)
                 env_info = env.step(actions)[brain_name]
-                reward = env_info.rewards[0]
-                next_state = env_info.vector_observations[0]
-                done = env_info.local_done[0]
-                agent.step(state, actions, reward, next_state, done)
-                score += reward
-                state = next_state
-                if done:
+                rewards = env_info.rewards
+                next_states = env_info.vector_observations
+                dones = env_info.local_done
+                agent.step(states, actions, rewards, next_states, dones)
+                scores += rewards
+                states = next_states
+                if np.all(dones):
                     break
 
-            self.scores.append(score)
+            self.scores.append(np.mean(scores))
             average_score_window = np.mean(self.scores[-self.score_window_size :])
 
             if verbose:

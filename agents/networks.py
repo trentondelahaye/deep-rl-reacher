@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Callable
 
 import torch
 import torch.nn as nn
@@ -13,7 +13,7 @@ class NeuralNetwork(nn.Module):
         input_size: int,
         output_size: int,
         fc_layers: Iterable[LayerSize],
-        final_activation: Optional[F],
+        final_activation: Optional[Callable],
     ):
         super().__init__()
         self.final_activation = final_activation

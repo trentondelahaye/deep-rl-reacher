@@ -12,6 +12,9 @@ class RandomAgentEnsemble(AgentEnsemble):
     def step(self, *args):
         pass
 
+    def reset(self):
+        pass
+
     def save(self, *args, filename: str = "", **kwargs):
         pass
 

@@ -26,6 +26,7 @@ class AgentTrainer:
         for _ in range(number_episodes):
             episode_number = len(self.scores) + 1
             env_info = env.reset(train_mode=True)[brain_name]
+            agent.reset()
             states = env_info.vector_observations
             scores = np.zeros(number_of_agents)
             while True:

@@ -38,6 +38,10 @@ class AgentEnsemble(ABC):
         pass
 
     @abstractmethod
+    def reset(self):
+        pass
+
+    @abstractmethod
     def save(self, *args, filename: str = "", **kwargs):
         pass
 

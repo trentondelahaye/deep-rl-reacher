@@ -11,7 +11,7 @@ def watch_episode(env: UnityEnvironment, agent: AgentEnsemble, **kwargs):
     states = env_info.vector_observations
     dones = env_info.local_done
     while not np.any(dones):
-        actions = agent.act(states)
+        actions = agent.act(states, False)
         env_info = env.step(actions)[brain_name]
         next_states = env_info.vector_observations
         dones = env_info.local_done

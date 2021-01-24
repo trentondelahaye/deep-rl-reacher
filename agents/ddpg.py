@@ -20,7 +20,7 @@ log = logging.getLogger()
 
 
 class DDPGAgentEnsemble(AgentEnsemble):
-
+    train_with_noise = True
     torch_states = (
         "actor",
         "actor_target",
@@ -125,7 +125,7 @@ class DDPGAgentEnsemble(AgentEnsemble):
         with torch.no_grad():
             actions = self.actor(state).cpu().data.numpy()
         self.actor.train()
-        if add_noise:
+        if add_noise and self.train_with_noise:
             actions += self.noise.sample()
         return np.clip(actions, -1, 1)
 
@@ -230,10 +230,4 @@ class DDPGAgentSimpleCatEnsemble(DDPGAgentEnsemble):
 
 
 class DDPGAgentNoNoiseEnsemble(DDPGAgentEnsemble):
-    def act(self, state: np.ndarray, *args) -> np.ndarray:
-        state = torch.from_numpy(state).float().to(device)
-        self.actor.eval()
-        with torch.no_grad():
-            actions = self.actor(state)
-        self.actor.train()
-        return actions.cpu().data.numpy()
+    train_with_noise = False

@@ -23,7 +23,7 @@ class AgentEnsemble(ABC):
         self.train = train_mode
 
     @abstractmethod
-    def act(self, state: np.ndarray) -> np.ndarray:
+    def act(self, state: np.ndarray, add_noise: bool = True) -> np.ndarray:
         pass
 
     @abstractmethod

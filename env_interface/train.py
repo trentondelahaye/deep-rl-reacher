@@ -30,7 +30,7 @@ class AgentTrainer:
             states = env_info.vector_observations
             scores = np.zeros(number_of_agents)
             while True:
-                actions = agent.act(states)
+                actions = agent.act(states, True)
                 env_info = env.step(actions)[brain_name]
                 rewards = env_info.rewards
                 next_states = env_info.vector_observations
